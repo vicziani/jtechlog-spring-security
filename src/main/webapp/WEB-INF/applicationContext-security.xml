@@ -10,7 +10,7 @@
         <intercept-url pattern="/login.html" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <intercept-url pattern="/" access="ROLE_ADMIN, ROLE_USER" />
         <intercept-url pattern="/addUser.html" access="ROLE_ADMIN" />
-        <form-login login-page="/login.html" default-target-url="/" authentication-failure-url="/login.htm?login_error=1" />
+        <form-login login-page="/login.html" default-target-url="/" authentication-failure-url="/login.html?login_error=1" />
         <logout logout-success-url="/login.html"/>
     </http>
  

@@ -32,7 +32,7 @@
         </ul>
 
         <security:authorize ifAllGranted="ROLE_ADMIN">
-            <form method="post" action="/">
+            <form method="post" action="/addUser.html">
                 Felhasználónév: <input type="text" name="username" value="" />
                 Jelszó: <input type="text" name="password" value="" />
                 Szerepkörök: <input type="text" name="roles" value="" /><br />

@@ -36,7 +36,7 @@ public class DefaultUserService implements UserDetailsService, UserService {
     
    @Override
    public List<User> listUsers() {
-       return entityManager.createQuery("select u from User u").getResultList();
+       return entityManager.createQuery("select u from User u", User.class).getResultList();
    }
    
    @Override

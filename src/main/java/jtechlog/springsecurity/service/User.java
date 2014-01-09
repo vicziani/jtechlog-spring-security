@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -37,9 +37,9 @@ public class User implements UserDetails, Serializable {
     
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
         for (String s: roles.split(", ")) {
-            authorities.add(new GrantedAuthorityImpl("ROLE_" + s.toUpperCase()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + s.toUpperCase()));
         }
         return authorities;
     }    

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class UsernameInUrlAuthenticationFailureHandler  extends SimpleUrlAuthenticationFailureHandler {
+public class UsernameInUrlAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     public static final String LAST_USERNAME_KEY = "LAST_USERNAME";
 

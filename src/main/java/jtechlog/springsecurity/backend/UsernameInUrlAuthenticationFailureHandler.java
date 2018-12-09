@@ -1,4 +1,4 @@
-package jtechlog.springsecurity.service;
+package jtechlog.springsecurity.backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;

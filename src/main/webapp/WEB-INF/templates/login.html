@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>JTechLog Spring Security</title>
+</head>
+
+<body>
+        <h1>JTechLog Spring Security</h1>
+
+        <p>Bejelentkezni az admin/admin vagy a user/user felhasználónév/jelszó
+            párossal lehetséges.</p>
+
+    <div th:if="${error}">
+        Sikertelen bejelentkezés
+    </div>
+
+        <form th:action="@{login}" method="post">
+            <input type="text" name="username" />
+            <input type="password" name="password"/>
+            <input type="submit" value="Bejelentkezés"/>
+        </form>
+
+    </body>
+</html>

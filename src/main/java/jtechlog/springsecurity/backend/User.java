@@ -1,12 +1,11 @@
-package jtechlog.springsecurity.service;
+package jtechlog.springsecurity.backend;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,42 +15,46 @@ import org.springframework.security.core.userdetails.UserDetails;
  * interfészt is.
  */
 @Entity
-@Table(name="SPRINGSEC_USER")
+@Table(name="users")
 public class User implements UserDetails, Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
-    private String roles;
+    private String role;
 
     public User() {
     }
 
-    public User(String username, String password, String roles) {
+    public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
     }    
     
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        for (String s: roles.split(", ")) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + s.toUpperCase()));
-        }
-        return authorities;
-    }    
+        return List.of(new SimpleGrantedAuthority(role));
+    }
 
     @Override
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -82,14 +85,11 @@ public class User implements UserDetails, Serializable {
         this.id = id;
     }
 
-    public String getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
-    
-    
-
 }

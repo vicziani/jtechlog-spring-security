@@ -1,8 +1,8 @@
-﻿JTechLog Spring Security tutorial
-=================================
+﻿JTechLog Spring Security
+========================
 
-Ez a program a JTechLog (<http://jtechlog.blogspot.com>) blog "Spring Security" cikkéhez készült példaprogram. 
-Prezentálja a autorizációt és autentikációt. Kétrétegű alkalmazás, JPA perzisztens réteggel és Spring MVC 
-web réteggel. Maven-nel build-elhető, és a letöltést követően a 'mvn jetty:run' paranccsal futtatható. 
+Ez a program a JTechLog (<http://jtechlog.hu>) blog "Spring Security" cikkéhez készült példaprogram.
+Prezentálja a autorizációt és autentikációt. Kétrétegű alkalmazás, Spring Data JPA perzisztens réteggel és Spring MVC
+web réteggel. Mavennel buildelhető, és a letöltést követően a 'mvn jetty:run' paranccsal futtatható.
 
 viczian.istvan a gmail-en

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <title>JTechLog Spring Security</title>
+</head>
+
+<body>
+        <h1>JTechLog Spring Security</h1>
+
+        <div sec:authorize="isAuthenticated()">
+            Bejelentkezett felhasználó:
+                <span sec:authentication="name">Bob</span>
+                <a th:href="@{/logout}">Kijelentkezés</a>
+            <br />
+            Szerepkörök: <span sec:authentication="principal.authorities">[]</span>
+        </div>
+
+        <p>Felhasználók:</p>
+
+        <ul>
+            <th:block th:each="user : ${users}">
+                <li th:text="${user.username}"></li>
+            </th:block>
+        </ul>
+
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <form method="post" th:action="@{/}" th:object="${user}">
+                Felhasználónév: <input th:field=*{username} type="text" />
+                Jelszó: <input type="password" th:field=*{password} />
+                Szerepkörök: <input type="text" th:field="*{role}" /><br />
+                <input type="submit" value="Felvesz" />
+            </form>
+        </div>
+
+    </body>
+</html>

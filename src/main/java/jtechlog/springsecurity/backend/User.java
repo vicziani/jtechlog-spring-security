@@ -1,7 +1,6 @@
 package jtechlog.springsecurity.backend;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.*;
@@ -10,10 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-/**
- * Felhasználó entitás. Implementálja a Spring Security UserDetails
- * interfészt is.
- */
 @Entity
 @Table(name="users")
 public class User implements UserDetails, Serializable {
@@ -32,8 +27,8 @@ public class User implements UserDetails, Serializable {
         this.username = username;
         this.password = password;
         this.role = role;
-    }    
-    
+    }
+
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
@@ -91,5 +86,15 @@ public class User implements UserDetails, Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

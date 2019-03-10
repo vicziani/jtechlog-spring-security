@@ -5,7 +5,8 @@ import jtechlog.springsecurity.backend.SecurityConfig;
 import jtechlog.springsecurity.web.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class WebAppInitializer  extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebAppInitializer
+        extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {

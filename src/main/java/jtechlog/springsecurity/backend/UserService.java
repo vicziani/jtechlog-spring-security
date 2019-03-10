@@ -2,10 +2,11 @@ package jtechlog.springsecurity.backend;
 
 import java.util.List;
 
-import jtechlog.springsecurity.backend.User;
-import jtechlog.springsecurity.backend.UserRepository;
-import org.springframework.dao.DataAccessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService  implements UserDetailsService {
+public class UserService implements UserDetailsService {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private UserRepository userRepository;
 
@@ -25,16 +28,20 @@ public class UserService  implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+    public UserDetails loadUserByUsername(String username) {
         return userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
     
    public List<User> listUsers() {
-       return userRepository.findAll();
+        Object user = SecurityContextHolder.getContext()
+               .getAuthentication().getPrincipal();
+       logger.debug("Logged in user: {}", user);
+
+       return userRepository.findAll(Sort.by("username"));
    }
    
-   @PreAuthorize("hasRole('ROLE_ADMIN')")
+   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
    public void addUser(User user) {
        user.setPassword(passwordEncoder.encode(user.getPassword()));
        userRepository.save(user);

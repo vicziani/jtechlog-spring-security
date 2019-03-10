@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,6 +17,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -26,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+//        return NoOpPasswordEncoder.getInstance();
         return new BCryptPasswordEncoder();
     }
 
@@ -33,10 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth
 //                .inMemoryAuthentication()
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance())
 //                .withUser("user")
-//                .password("user")
-//                .authorities("ROLE_USER");
+//                .password("$2a$10$ADR5Ol7to6gUl4zdL1iasu4Oa/J9La4r30Jjbgaq0X946HvsWqTT2")
+//                .authorities("USER");
 
 //        auth
 //                .jdbcAuthentication()
@@ -46,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                        "where username = ?")
 //                .authoritiesByUsernameQuery(
 //                        "select username, role from users " +
-//                                "where username=?");
+//                                "where username = ?");
 
         auth.userDetailsService(userDetailsService);
     }
@@ -56,10 +58,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/")
-                .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/**").access("permitAll")
+                    .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .and()
                 .formLogin()
-                .loginPage("/login");
+                .loginPage("/login")
+                .failureHandler(usernameInUrlAuthenticationFailureHandler())
+                .and()
+                .logout();
+    }
+
+    @Bean
+    public UsernameInUrlAuthenticationFailureHandler usernameInUrlAuthenticationFailureHandler() {
+        return new UsernameInUrlAuthenticationFailureHandler();
     }
 }

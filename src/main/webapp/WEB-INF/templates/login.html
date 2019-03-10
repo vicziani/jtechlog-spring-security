@@ -6,20 +6,24 @@
 </head>
 
 <body>
-        <h1>JTechLog Spring Security</h1>
+    <h1>JTechLog Spring Security</h1>
 
-        <p>Bejelentkezni az admin/admin vagy a user/user felhasználónév/jelszó
-            párossal lehetséges.</p>
+    <p>Bejelentkezni az admin/admin vagy a user/user felhasználónév/jelszó
+        párossal lehetséges.</p>
 
-    <div th:if="${error}">
+    <div th:if="${param.error}">
         Sikertelen bejelentkezés
     </div>
 
-        <form th:action="@{login}" method="post">
-            <input type="text" name="username" />
-            <input type="password" name="password"/>
-            <input type="submit" value="Bejelentkezés"/>
-        </form>
+    <div th:if="${param.logout}">
+        Sikeres kijelentkezés
+    </div>
+
+    <form th:action="@{login}" method="post">
+        <input type="text" name="username" th:value="${lastUsername}"/>
+        <input type="password" name="password"/>
+        <input type="submit" value="Bejelentkezés"/>
+    </form>
 
     </body>
 </html>

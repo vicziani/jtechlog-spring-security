@@ -9,11 +9,14 @@
         <h1>JTechLog Spring Security</h1>
 
         <div sec:authorize="isAuthenticated()">
-            Bejelentkezett felhasználó:
-                <span sec:authentication="name">Bob</span>
-                <a th:href="@{/logout}">Kijelentkezés</a>
-            <br />
-            Szerepkörök: <span sec:authentication="principal.authorities">[]</span>
+            <p>Bejelentkezett felhasználó:
+                <span sec:authentication="name">Bob</span></p>
+
+            <form method="post" th:action="@{/logout}">
+                <input type="submit" value="Kijelentkezés" />
+            </form>
+
+            <p>Szerepkör: <span sec:authentication="principal.authorities">[]</span></p>
         </div>
 
         <p>Felhasználók:</p>
@@ -28,7 +31,7 @@
             <form method="post" th:action="@{/}" th:object="${user}">
                 Felhasználónév: <input th:field=*{username} type="text" />
                 Jelszó: <input type="password" th:field=*{password} />
-                Szerepkörök: <input type="text" th:field="*{role}" /><br />
+                Szerepkör: <input type="text" th:field="*{role}" /><br />
                 <input type="submit" value="Felvesz" />
             </form>
         </div>
